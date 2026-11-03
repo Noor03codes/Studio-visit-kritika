@@ -1,0 +1,310 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f4f3ef; /* Off-white publication / paper texture feel */
+  color: #111111;
+  font-family: 'Gill Sans MT', sans-serif;
+  padding: 0.8rem 1rem 0;
+}
+@media (min-width: 1025px){
+
+ .box-header { 
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 1rem; 
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+#header-left { font-size: 84px;  font-weight: 500; grid-column: 1 / 2; }
+#detail { font-size: 18px; grid-column: 2 / 3; text-align: right; margin: 0.8em 0 0 0; color: #666; }
+.header-subtitle { font-size: 22px;  padding: 0 0 1em 0.2em; letter-spacing: 1px;color: #666; }
+  
+.main-image { 
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+    margin: 0 1em 0 0;
+    width: 100%;
+}
+.clipping-container1 { 
+    display: block;
+    grid-column: 1 / 2;  
+    width: 100%;    height: auto; 
+    aspect-ratio: 4/4; 
+}
+.clipping-container1 > .image1 
+{ display: block; object-fit: cover;object-position: center; width: 100%; height: 100%; }
+
+.clipping-container2 
+{   display: grid;
+    grid-column: 2 / 7; 
+    grid-template-columns: repeat(24, 1fr); 
+    grid-template-rows: repeat(15, 1fr);
+    width: 100%; 
+    min-height: 100%; max-height: 0; 
+   /* grid-column: 2 / 6;  grid-row: 1 / 2;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
+}
+.clipping-container2 > .image2 { 
+    grid-column: 3 / 8;
+    grid-row: 10 / 16;
+    display: block; object-fit: cover; object-position: center; width: 100%; height: 100%; }
+
+.question { 
+    grid-column: 1 / 25; 
+    grid-row: 2 / 9; 
+    font-size: 56px; 
+    padding: 0 0.8rem 0; 
+    text-align: right; }
+
+.bio-text { 
+    grid-column: 9 / 25; 
+    grid-row: 12 / 14; 
+    font-size: 17px; 
+    padding: 0 0.8rem ; 
+    text-align:justify; 
+    text-align-last: right;
+ }
+.boxabout-visit { 
+    display: grid;
+    grid-template-columns: repeat(24, 1fr); 
+    grid-template-rows: repeat(10, 1fr);
+    width: 100%; max-height: 80vh;}
+
+.about-button { 
+        margin: 0.8em 0;
+        display: inline-block;
+        text-align:center; 
+        WHITE-SPACE: nowrap;
+        background-color: #323509; color: #f4f3ef; border:rgb(133, 7, 7);border-radius: 1em; cursor: pointer;
+        animation: modernMarquee 24s linear infinite; /* '15s' controls the pace/speed */
+        width: 5em; height: 3em;   }
+ /*.about-button img {
+            width: 100%;
+            height: 110%;
+            object-fit: cover;
+                border-radius: 0.4em;
+}
+       @keyframes modernMarquee {
+    0% { transform: translate3d(0, 0, 0); }
+    20% { transform: translate3d(calc(100vw - 100px), 0, 0); }
+    30% { transform: translate3d(calc(100vw - 100px), 30px, 50px); }
+    70% { transform: translate3d(60vw, 50px, 0); }
+    90% { transform: translate3d(0, 90px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+} */
+
+
+/*.boxabout-visit > p { 
+    display: block;
+    white-space: pre-line;
+    grid-column: 2 / 14; 
+    grid-row: 3 / 10; 
+    font-size: 16px; 
+    padding: 0 0.8rem ; 
+    text-align:justify; 
+    text-align-last: left;}
+
+ /* Shared properties across all text units */
+ 
+.boxabout-visit > .reading-block { 
+    display: block;
+    grid-column: 2 / 14; /* Flawless horizontal matching */
+    font-size: 16px; 
+    padding: 0 0.8rem; 
+    text-align: justify; 
+    text-align-last: left;
+    line-height: 1.2;
+
+    /* Baseline color: A dry, light graphite gray */
+    color: #718096;
+
+    /* Scroll Animation Linkage */
+    animation: reading-focus-flow linear both;
+    animation-timeline: view();
+}
+
+/* --- Explicit Row Mappings --- */
+.boxabout-visit > .block-1 {
+    grid-row: 2 / 4;
+    animation-range: contain 15% contain 85%;
+}
+
+.boxabout-visit > .block-2 {
+    grid-row: 5 / 7;
+    animation-range: contain 25% contain 95%;
+}
+
+.boxabout-visit > .block-3 {
+    grid-row: 8 / 11;
+    animation-range: cover 45% exit 80%;
+}
+
+/* --- The Deep Ink Absorption Timeline --- */
+@keyframes reading-focus-flow {
+    0% {
+        color: #718096;
+    }
+    /* Sweet spot: The paragraph is fully immersed in a deep, readable studio slate indigo */
+    35%, 75% {
+        color: #97104f;
+    }
+    100% {
+        color: #718096;
+    }
+}
+   
+
+.sketchbook-container { 
+    display: block;
+    grid-column: 15 / 23; grid-row: 2 / 10; 
+    aspect-ratio: 4 / 3; 
+    width: 100%; height: auto;
+    padding: 0;
+}
+.sketchbook-container > img { 
+    width: 100%; 
+    height: 100%;
+    object-fit: cover; 
+    object-position: 0 30px 0 0;
+    object-position:bottom; 
+    padding: 0;
+}
+.box-closeup { 
+    display: grid;
+    grid-template-columns: 1fr; grid-template-rows: max-content; align-content: start;
+    padding: 5em 0 0 0;
+}
+.closeup-container > img { 
+    display: block;
+    grid-column: 1 / 2; grid-row: 1 / 2;
+    width: 100%; height: 150vh;   
+    padding: 0;
+    object-position:bottom; object-fit: cover;
+}
+.closeup-text { 
+    display: block;
+    position: absolute;
+    font-size: 28px; letter-spacing: 1px; line-height: 1.1; text-align: justify; 
+    width: 60%;
+    background-color: rgba(5, 31, 54, 0.3);  color: #f4f3ef;   -webkit-mask-image: linear-gradient(to bottom, transparent, black 20px, black calc(100% - 20px), transparent),
+                      linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 20px, black calc(100% - 20px), transparent),
+              linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
+               -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+    padding: 2em ;justify-self: center;  
+    align-self: center;  
+    align-items:center;
+}
+
+
+/* Core alignment on your grid tracks */
+.deck-container {
+  position: relative;
+  grid-column: 15 / 23; 
+  grid-row: 2 / 10; 
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  margin-bottom: 80px; /* Secure padding clearance for the next down-page section */
+}
+
+/* Hide all structural radio triggers */
+.deck-radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.stack-wrapper {
+  position: relative;
+  width: 90%; 
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Settings for flat, 100% solid, uncropped layers */
+.layer {
+  position: absolute;
+  width: 100%; 
+  height: 100%; 
+  border: none !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  opacity: 1 !important; 
+  cursor: pointer;
+  
+  /* FIXED FLUIDITY ENGINE: Switched z-index to step-start. 
+     Dropping cards immediately yield stacking priority to the new active card 
+     so they slide smoothly underneath it without layer clipping. */
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), z-index 0.45s step-start;
+}
+
+/* Clean click-through mechanics to avoid browser drag interference */
+.layer img {
+  pointer-events: none; 
+  user-select: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   THE 5-WAY MULTI-DIRECTIONAL SCATTER + ZERO-LAG ZOOM SYSTEM
+   The active checked image uses 'z-index 0s' to pop instantly over everything 
+   while zooming, removing the layer transition lag completely.
+   ========================================================================== */
+
+/* --- STATE 1: Slide 1 Active --- */
+#slide-1:checked ~ .stack-wrapper .card-1 { transform: translate(0, 0) scale(1.2); z-index: 50; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s; }
+#slide-1:checked ~ .stack-wrapper .card-2 { transform: translate(60px, 40px); z-index: 4; }
+#slide-1:checked ~ .stack-wrapper .card-3 { transform: translate(120px, -20px); z-index: 3; }
+#slide-1:checked ~ .stack-wrapper .card-4 { transform: translate(-80px, 80px); z-index: 2; }
+#slide-1:checked ~ .stack-wrapper .card-5 { transform: translate(-140px, -40px); z-index: 1; }
+
+/* --- STATE 2: Slide 2 Active --- */
+/* --- STATE 2: Slide 2 Active --- */
+#slide-2:checked ~ .stack-wrapper .card-2 { transform: translate(0, 0) scale(1.2); z-index: 50; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s; }
+#slide-2:checked ~ .stack-wrapper .card-3 { transform: translate(60px, 40px); z-index: 4; }
+#slide-2:checked ~ .stack-wrapper .card-4 { transform: translate(120px, -20px); z-index: 3; }
+#slide-2:checked ~ .stack-wrapper .card-5 { transform: translate(-30px, 80px); z-index: 2; } /* Pulled in from -80px to protect the left edge */
+#slide-2:checked ~ .stack-wrapper .card-1 { transform: translate(-60px, -60px); z-index: 1; } /* Safely reeled back from -180px so it stays behind/right of line 15 */
+
+/* --- STATE 3: Slide 3 Active --- */
+#slide-3:checked ~ .stack-wrapper .card-3 { transform: translate(0, 0) scale(1.2); z-index: 50; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s; }
+#slide-3:checked ~ .stack-wrapper .card-4 { transform: translate(60px, 40px); z-index: 4; }
+#slide-3:checked ~ .stack-wrapper .card-5 { transform: translate(12px, -20px); z-index: 3; }
+#slide-3:checked ~ .stack-wrapper .card-1 { transform: translate(-60px, -60px); z-index: 2; }   /* Reeled in from -180px */
+#slide-3:checked ~ .stack-wrapper .card-2 { transform: translate(-45px, 80px); z-index: 1; }    /* Reeled in from -140px */
+
+/* --- STATE 4: Slide 4 Active --- */
+#slide-4:checked ~ .stack-wrapper .card-4 { transform: translate(0, 0) scale(1.2); z-index: 50; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s; }
+#slide-4:checked ~ .stack-wrapper .card-5 { transform: translate(60px, 40px); z-index: 4; }
+#slide-4:checked ~ .stack-wrapper .card-1 { transform: translate(-60px, -60px); z-index: 3; }   /* Reeled in from -180px */
+#slide-4:checked ~ .stack-wrapper .card-2 { transform: translate(-45px, 80px); z-index: 2; }    /* Reeled in from -140px */
+#slide-4:checked ~ .stack-wrapper .card-3 { transform: translate(190px, -80px); z-index: 1; } 
+
+
+/* --- STATE 5: Slide 5 Active --- */
+#slide-5:checked ~ .stack-wrapper .card-5 {   transform: translate(0, 0) scale(1.2); z-index: 50; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s; }
+#slide-5:checked ~ .stack-wrapper .card-1 { transform: translate(-60px, -60px); z-index: 4; } /* Reeled in from -180px */
+#slide-5:checked ~ .stack-wrapper .card-2 { transform: translate(-45px, 60px); z-index: 3; }  /* Reeled in from -140px to stay right of line 15 */
+#slide-5:checked ~ .stack-wrapper .card-3 { transform: translate(140px, -80px); z-index: 2; } /* Tamed slightly to keep right side balanced */
+#slide-5:checked ~ .stack-wrapper .card-4 { transform: translate(120px, 100px); z-index: 1; } /* Tamed slightly to stay compact */
+
+
+
+}
