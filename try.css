@@ -654,7 +654,7 @@ body{
  
 .boxabout-visit > .reading-block {
     display: block;
-    grid-column: 2 / 14;
+    grid-column: 2 / 13;
     font-size: 16px;
     padding: 0 0.8rem;
     text-align: justify;
