@@ -1,27 +1,6 @@
-/* =========================
-   MOBILE DEFAULT
-   0–767px
-   ========================= */
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding: 0.2em;
-}
-
-body{
-  background:#f4f3ef;
-  color:#111;
-  font-family:'Gill Sans MT',sans-serif;
-  overflow-x:hidden;
-}
 /* =========================================================
-```css
-/* =========================================================
-   MOBILE + TABLET: shared rules (up to 1024px)
+   TOKENS + BASE
    ========================================================= */
-@media (max-width:1024px){
-
 :root{
   --pad:12px;
   --paper:#f4f3ef;
@@ -30,6 +9,31 @@ body{
   --panel:#6e0f3b;
   --slate:#718096;
 }
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:.2em;
+}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Gill Sans MT',sans-serif;
+  overflow-x:hidden;
+}
+
+/* Shared by .reading-block at every breakpoint */
+@keyframes reading-focus{
+  0%{ color:var(--slate); }
+  35%, 75%{ color:var(--burg); }
+  100%{ color:var(--slate); }
+}
+
+/* =========================================================
+   MOBILE + TABLET: shared rules (up to 1024px)
+   ========================================================= */
+@media (max-width:1024px){
 
 .grid-container{
   display:grid;
@@ -43,7 +47,7 @@ body{
   max-width:100%;
 }
 
-/* ---------- HERO + MASTHEAD ---------- */
+/* ---------- HERO + MASTHEAD (unchanged) ---------- */
 
 .box-header{
   position:relative;
@@ -143,8 +147,9 @@ body{
 }
 
 /* ---------- ESSAY: text left, image stack right ---------- */
-/* Row 3 is a flexible runway row. The stack spans rows 2-3, so any extra
-   stack height is absorbed by row 3 and never stretches the paragraphs. */
+/* The stack starts in row 1 and spans rows 1-3. Row 3 is a flexible runway:
+   it only grows when the stack is taller than paragraphs 1 + 2, so extra
+   stack height never stretches the paragraphs. */
 
 .boxabout-visit{
   grid-column:1;
@@ -154,7 +159,7 @@ body{
   grid-template-rows:auto auto minmax(0,1fr) auto;
   column-gap:10px;
   align-items:start;
-  padding:clamp(64px,15vw,120px) var(--pad) 0;
+  padding:clamp(32px,8vw,56px) var(--pad) 0;
 }
 
 .reading-block{
@@ -166,23 +171,27 @@ body{
   -webkit-hyphens:auto;
 }
 
-.block-1{
+.block-1,
+.block-2{
   grid-column:1 / 7;
+  margin-right:2em;
+}
+
+.block-1{
   grid-row:1;
   color:#2b2b2b;
 }
 
 .block-2{
-  grid-column:1 / 7;
   grid-row:2;
-  margin-top:clamp(14px,4vw,24px);
+  margin-top:12px;
   color:var(--burg);
 }
 
 .block-3{
   grid-column:1 / -1;
   grid-row:4;
-  margin-top:clamp(28px,7vw,52px);
+  margin-top:28px;
   color:var(--slate);
 }
 
@@ -190,6 +199,7 @@ body{
 
 .grid-container .deck-container{
   position:relative;
+  grid-row:1 / 4;
   min-width:0;
   align-self:start;
   display:flex;
@@ -218,77 +228,34 @@ body{
   object-fit:cover;
 }
 
+/* Navigation dots = the four radio inputs sitting above the stack */
+.deck-radio{
+  width:10px;
+  height:10px;
+}
+
 /* Vertical drop cascade: each layer behind the active one drops by a
    share of its own height and scales down progressively. */
 
-#slide-1:checked ~ .stack-wrapper .card-1{ transform:translateY(0) scale(1);        z-index:10; }
-#slide-1:checked ~ .stack-wrapper .card-2{ transform:translateY(8%) scale(.97);     z-index:4; }
-#slide-1:checked ~ .stack-wrapper .card-3{ transform:translateY(16%) scale(.94);    z-index:3; }
-#slide-1:checked ~ .stack-wrapper .card-4{ transform:translateY(24%) scale(.91);    z-index:2; }
-#slide-1:checked ~ .stack-wrapper .card-5{ transform:translateY(32%) scale(.88);    z-index:1; }
+#slide-1:checked ~ .stack-wrapper .card-1{ transform:translateY(0) scale(1);     z-index:10; }
+#slide-1:checked ~ .stack-wrapper .card-2{ transform:translateY(8%) scale(.97);  z-index:4; }
+#slide-1:checked ~ .stack-wrapper .card-4{ transform:translateY(24%) scale(.91); z-index:2; }
+#slide-1:checked ~ .stack-wrapper .card-5{ transform:translateY(32%) scale(.88); z-index:1; }
 
-#slide-2:checked ~ .stack-wrapper .card-2{ transform:translateY(0) scale(1);        z-index:10; }
-#slide-2:checked ~ .stack-wrapper .card-3{ transform:translateY(8%) scale(.97);     z-index:4; }
-#slide-2:checked ~ .stack-wrapper .card-4{ transform:translateY(16%) scale(.94);    z-index:3; }
-#slide-2:checked ~ .stack-wrapper .card-5{ transform:translateY(24%) scale(.91);    z-index:2; }
-#slide-2:checked ~ .stack-wrapper .card-1{ transform:translateY(32%) scale(.88);    z-index:1; }
+#slide-2:checked ~ .stack-wrapper .card-2{ transform:translateY(0) scale(1);     z-index:10; }
+#slide-2:checked ~ .stack-wrapper .card-4{ transform:translateY(16%) scale(.94); z-index:3; }
+#slide-2:checked ~ .stack-wrapper .card-5{ transform:translateY(24%) scale(.91); z-index:2; }
+#slide-2:checked ~ .stack-wrapper .card-1{ transform:translateY(32%) scale(.88); z-index:1; }
 
-#slide-3:checked ~ .stack-wrapper .card-3{ transform:translateY(0) scale(1);        z-index:10; }
-#slide-3:checked ~ .stack-wrapper .card-4{ transform:translateY(8%) scale(.97);     z-index:4; }
-#slide-3:checked ~ .stack-wrapper .card-5{ transform:translateY(16%) scale(.94);    z-index:3; }
-#slide-3:checked ~ .stack-wrapper .card-1{ transform:translateY(24%) scale(.91);    z-index:2; }
-#slide-3:checked ~ .stack-wrapper .card-2{ transform:translateY(32%) scale(.88);    z-index:1; }
+#slide-4:checked ~ .stack-wrapper .card-4{ transform:translateY(0) scale(1);     z-index:10; }
+#slide-4:checked ~ .stack-wrapper .card-5{ transform:translateY(8%) scale(.97);  z-index:4; }
+#slide-4:checked ~ .stack-wrapper .card-1{ transform:translateY(16%) scale(.94); z-index:3; }
+#slide-4:checked ~ .stack-wrapper .card-2{ transform:translateY(24%) scale(.91); z-index:2; }
 
-#slide-4:checked ~ .stack-wrapper .card-4{ transform:translateY(0) scale(1);        z-index:10; }
-#slide-4:checked ~ .stack-wrapper .card-5{ transform:translateY(8%) scale(.97);     z-index:4; }
-#slide-4:checked ~ .stack-wrapper .card-1{ transform:translateY(16%) scale(.94);    z-index:3; }
-#slide-4:checked ~ .stack-wrapper .card-2{ transform:translateY(24%) scale(.91);    z-index:2; }
-#slide-4:checked ~ .stack-wrapper .card-3{ transform:translateY(32%) scale(.88);    z-index:1; }
-
-#slide-5:checked ~ .stack-wrapper .card-5{ transform:translateY(0) scale(1);        z-index:10; }
-#slide-5:checked ~ .stack-wrapper .card-1{ transform:translateY(8%) scale(.97);     z-index:4; }
-#slide-5:checked ~ .stack-wrapper .card-2{ transform:translateY(16%) scale(.94);    z-index:3; }
-#slide-5:checked ~ .stack-wrapper .card-3{ transform:translateY(24%) scale(.91);    z-index:2; }
-#slide-5:checked ~ .stack-wrapper .card-4{ transform:translateY(32%) scale(.88);    z-index:1; }
-
-/* ---------- NAVIGATION DOTS ---------- */
-/* Centered under the stack. The top margin (a share of the column width)
-   clears the deepest cascade layer, which hangs 20% of the stack height
-   below the wrapper. */
-
-.grid-container .deck-container :is(.dots-container,.pagination-dots,.nav-dots){
-  order:1;
-  position:static;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:8px;
-  width:100%;
-  margin-top:24%;
-}
-
-.grid-container .deck-container :is(.dots-container,.pagination-dots,.nav-dots) > label{
-  display:block;
-  flex:none;
-  width:6px;
-  height:6px;
-  padding:0;
-  border:0;
-  border-radius:50%;
-  background-color:#cccccc;
-  opacity:.55;
-  cursor:pointer;
-  transition:opacity .3s ease, background-color .3s ease;
-}
-
-.grid-container .deck-container #slide-1:checked ~ :is(.dots-container,.pagination-dots,.nav-dots) > label[for="slide-1"],
-.grid-container .deck-container #slide-2:checked ~ :is(.dots-container,.pagination-dots,.nav-dots) > label[for="slide-2"],
-.grid-container .deck-container #slide-3:checked ~ :is(.dots-container,.pagination-dots,.nav-dots) > label[for="slide-3"],
-.grid-container .deck-container #slide-4:checked ~ :is(.dots-container,.pagination-dots,.nav-dots) > label[for="slide-4"],
-.grid-container .deck-container #slide-5:checked ~ :is(.dots-container,.pagination-dots,.nav-dots) > label[for="slide-5"]{
-  background-color:#333333;
-  opacity:1;
-}
+#slide-5:checked ~ .stack-wrapper .card-5{ transform:translateY(0) scale(1);     z-index:10; }
+#slide-5:checked ~ .stack-wrapper .card-1{ transform:translateY(8%) scale(.97);  z-index:4; }
+#slide-5:checked ~ .stack-wrapper .card-2{ transform:translateY(16%) scale(.94); z-index:3; }
+#slide-5:checked ~ .stack-wrapper .card-4{ transform:translateY(32%) scale(.88); z-index:1; }
 
 /* ---------- CLOSEUP ---------- */
 
@@ -339,12 +306,6 @@ body{
   to{ background-position:0 100%; }
 }
 
-@keyframes reading-focus-m{
-  0%{ color:var(--slate); }
-  35%, 75%{ color:var(--burg); }
-  100%{ color:var(--slate); }
-}
-
 @supports (animation-timeline:view()){
 
   .question{
@@ -359,7 +320,7 @@ body{
   }
 
   .reading-block{
-    animation:reading-focus-m linear both;
+    animation:reading-focus linear both;
     animation-timeline:view();
     animation-range:cover 5% cover 95%;
   }
@@ -383,20 +344,24 @@ body{
   font-weight:200;
 }
 
-/* Stack sits in columns 7-12 on its own lower row track, starting level
-   with the second paragraph. Margin-bottom is the layout runway. */
+/* Hero image: drop the inherited .2em padding on the three hero wrappers */
+.main-image,
+.clipping-container1,
+.image1{
+  padding:0;
+}
+
+/* Stack: columns 7-12, level with paragraph 1.
+   margin-bottom only needs to clear the cascade overhang. */
 .grid-container .deck-container{
   grid-column:7 / 13;
-  grid-row:2 / 4;
-  margin-top:clamp(14px,4vw,24px);
-  margin-bottom:40px;
+  margin-bottom:16px;
 }
 
 }
 
 /* =========================================================
    TABLET (768 – 1024px)
-   Same cascade as mobile; the grid gives the stack a clear lane.
    ========================================================= */
 @media (min-width:768px) and (max-width:1024px){
 
@@ -441,14 +406,15 @@ body{
 }
 
 /* ---------- ESSAY + STACK ---------- */
-/* Columns 1-6 hold the text, column 7 is a gutter, columns 8-12 hold the
-   stack. The stack tracks are fixed at one twelfth of the grid, so they
-   never grow past the right edge and never change size. */
+/* Columns 1-6 hold the text, column 7 is a narrow gutter, columns 8-12 hold
+   the stack. The stack tracks are fixed at one twelfth of the grid, so they
+   never change size; only the gutter and the text tracks flex. */
 
 .boxabout-visit{
   --col:calc((100% - 110px) / 12);
-  grid-template-columns:repeat(6,minmax(0,1fr)) var(--col) repeat(5,var(--col));
-  padding-top:120px;
+  --gutter:calc(var(--col) * .4);
+  grid-template-columns:repeat(6,minmax(0,1fr)) var(--gutter) repeat(5,var(--col));
+  padding-top:64px;
 }
 
 .reading-block{
@@ -456,28 +422,27 @@ body{
   line-height:1.55;
 }
 
-.block-3{ margin-top:64px; }
+.block-2{ margin-top:8px; }
 
 .grid-container .deck-container{
   grid-column:8 / 13;
-  grid-row:2 / 4;
-  margin-top:24px;
   margin-bottom:56px;
 }
 
-/* Slide 2 only: the gutter track widens, and the text tracks give up the
-   difference, so the stack keeps its size. */
+/* Slide 2 only: the gutter widens by the same amount as before, and the text
+   tracks give up the difference, so the stack keeps its size. */
 .grid-container:has(#slide-2:checked) .boxabout-visit{
-  grid-template-columns:repeat(6,minmax(0,1fr)) calc(var(--col) + clamp(24px,4.5vw,48px)) repeat(5,var(--col));
+  grid-template-columns:repeat(6,minmax(0,1fr)) calc(var(--gutter) + clamp(24px,4.5vw,48px)) repeat(5,var(--col));
 }
 
 /* ---------- CLOSEUP ---------- */
 
-.box-closeup{ margin-top:140px; }
+.box-closeup{ margin-top:72px; }
 
 .closeup-text{
-  left:12%;
-  right:auto;
+  left:0;
+  right:0;
+  margin:0 auto;
   width:min(560px,66%);
   padding:24px 28px;
   font-size:17px;
@@ -490,360 +455,279 @@ body{
 
 }
 
+/* =========================================================
+   DESKTOP (1025px +)
+   ========================================================= */
+@media (min-width:1025px){
 
-
-@media (min-width: 1025px){
-
-.grid-container {
-  max-width: 1600px;
-  margin: 0 auto;
-}
- .box-header { 
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0 0.6rem; 
-  width: 100%;
-  margin: 0 auto;
-}
-#header-left { font-size: 84px;  font-weight: 500; grid-column: 1 / 2; }
-#detail { font-size: 18px; grid-column: 2 / 3; text-align: right; margin: 0.8em 0 0 0; color: #666; }
-.header-subtitle { font-size: 22px;  padding: 0 0 1em 0.9em; letter-spacing: 1px;color: #666; }
-  
-.main-image { 
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
-    margin: 0 1em 0 0;
-    width: 100%;
-}
-.clipping-container1 { 
-    display: block;
-    grid-column: 1 / 2;  
-    width: 100%;    height: auto; 
-    aspect-ratio: 4/4; 
-}
-.clipping-container1 > .image1 
-{ display: block; object-fit: cover;object-position: center; width: 100%; height: 100%; }
-
-.clipping-container2 
-{   display: grid;
-    grid-column: 2 / 7; 
-    grid-template-columns: repeat(24, 1fr); 
-    grid-template-rows: repeat(15, 1fr);
-    width: 100%; 
-    min-height: 100%; max-height: 0; 
-   /* grid-column: 2 / 6;  grid-row: 1 / 2;
-    height: auto;
-    aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
-}
-.clipping-container2 > .image2 { 
-    grid-column: 3 / 8;
-    grid-row: 10 / 16;
-    display: block; object-fit: cover; object-position: center; width: 100%; height: 100%; }
-
-@property --ink-rise {
-    syntax: "<percentage>";
-    inherits: false;
-    initial-value: -35%;
+.grid-container{
+  max-width:1600px;
+  margin:0 auto;
 }
 
-
-/* ==========================================================================
-   2. THE HEADING COMPONENT (.question)
-   ========================================================================== */
-.question { 
-    grid-column: 1 / 25; 
-    grid-row: 2 / 9; 
-    font-size: 56px; 
-    padding: 0 0.8rem 0; 
-    text-align: right;
-    display: block;
-    line-height: 1.1;
-
-    /* broad 35% color feather handles the smooth bleeding quality */
-    background: linear-gradient(
-        to top, 
-        #97104f 0%, 
-        #97104f var(--ink-rise), 
-        #000000 calc(var(--ink-rise) + 35%), 
-        #000000 100%
-    );
-    background-size: 100% 100%;
-    
-    /* Font Masking */
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    /* Global Window Scroll Linkage */
-    animation-name: heading-bleed-up;
-    animation-fill-mode: both;
-    animation-timeline: scroll(root);
-    
-    /* Accelerates response at pixel zero while gently smoothing out near the top */
-    animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+.box-header{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0 .6rem;
+  width:100%;
+  margin:0 auto;
 }
 
-/* ==========================================================================
-   3. ACCELERATED SCROLL KEYFRAMES (Ultra-Soon Triggering)
-   ========================================================================== */
-@keyframes heading-bleed-up {
-    0% {
-        --ink-rise: -20%; /* Sits completely solid black on load */
-    }
-    /* 
-       Tightened from 25% down to 12% to make it happen much sooner, matching 
-       the immediate, subtle finger nudge on your trackpad or scroll wheel.
-    */
-    24%, 100% {
-        --ink-rise: 100%; 
-    }
+#header-left{ font-size:84px; font-weight:500; grid-column:1 / 2; }
+#detail{ font-size:18px; grid-column:2 / 3; text-align:right; margin:.8em 0 0 0; color:#666; }
+.header-subtitle{ font-size:22px; padding:0 0 1em .9em; letter-spacing:1px; color:#666; }
+
+.main-image{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;
+  margin:0 1em 0 0;
+  width:100%;
 }
 
-
-
-
-.bio-text { 
-    grid-column: 9 / 25; 
-    grid-row: 12 / 14; 
-    font-size: 17px; 
-    padding: 0 0.8rem ; 
-    text-align:justify; 
-    text-align-last: right;
- }
-.boxabout-visit { 
-    display: grid;
-    grid-template-columns: repeat(24, 1fr); 
-    grid-template-rows: repeat(10, 1fr);
-    width: 100%; max-height: 80vh;}
-
-.about-button { 
-        margin: 0.8em 0;
-        display: inline-block;
-        text-align:center; 
-        WHITE-SPACE: nowrap;
-        background-color: #323509; color: #f4f3ef; border:rgb(133, 7, 7);border-radius: 1em; cursor: pointer;
-        animation: modernMarquee 24s linear infinite; /* '15s' controls the pace/speed */
-        width: 5em; height: 3em;   }
- /*.about-button img {
-            width: 100%;
-            height: 110%;
-            object-fit: cover;
-                border-radius: 0.4em;
-}
-       @keyframes modernMarquee {
-    0% { transform: translate3d(0, 0, 0); }
-    20% { transform: translate3d(calc(100vw - 100px), 0, 0); }
-    30% { transform: translate3d(calc(100vw - 100px), 30px, 50px); }
-    70% { transform: translate3d(60vw, 50px, 0); }
-    90% { transform: translate3d(0, 90px, 0); }
-    100% { transform: translate3d(0, 0, 0); }
-} */
-
-
-/*.boxabout-visit > p { 
-    display: block;
-    white-space: pre-line;
-    grid-column: 2 / 14; 
-    grid-row: 3 / 10; 
-    font-size: 16px; 
-    padding: 0 0.8rem ; 
-    text-align:justify; 
-    text-align-last: left;}
-
- /* Shared properties across all text units */
- 
-.boxabout-visit > .reading-block {
-    display: block;
-    grid-column: 2 / 13;
-    font-size: 16px;
-    padding: 0 0.8rem;
-    text-align: justify;
-    text-align-last: left;
-    line-height: 1.2;
-    color: #718096;
-    margin-bottom: 2rem;
-
-    animation: reading-focus-flow linear both;
-    animation-timeline: view();
+.clipping-container1{
+  display:block;
+  grid-column:1 / 2;
+  width:100%;
+  height:auto;
+  aspect-ratio:4/4;
 }
 
-/* --- Explicit Row Mappings --- */
-.boxabout-visit > .block-1 {
-    grid-row: 2 / 4;
-    animation-range: contain 15% contain 85%;
+.clipping-container1 > .image1{
+  display:block;
+  object-fit:cover;
+  object-position:center;
+  width:100%;
+  height:100%;
 }
 
-.boxabout-visit > .block-2 {
-    grid-row: 5 / 7;
-    animation-range: contain 25% contain 95%;
+.clipping-container2{
+  display:grid;
+  grid-column:2 / 7;
+  grid-template-columns:repeat(24,1fr);
+  grid-template-rows:repeat(15,1fr);
+  width:100%;
+  min-height:100%;
+  max-height:0;
 }
 
-.boxabout-visit > .block-3 {
-    grid-row: 8 / 11;
-    animation-range: cover 45% exit 80%;
+.clipping-container2 > .image2{
+  grid-column:3 / 8;
+  grid-row:10 / 16;
+  display:block;
+  object-fit:cover;
+  object-position:center;
+  width:100%;
+  height:100%;
 }
 
-/* --- The Deep Ink Absorption Timeline --- */
-@keyframes reading-focus-flow {
-    0% {
-        color: #718096;
-    }
-    /* Sweet spot: The paragraph is fully immersed in a deep, readable studio slate indigo */
-    35%, 75% {
-        color: #97104f;
-    }
-    100% {
-        color: #718096;
-    }
-}
-   
+/* ---------- HEADING (.question) ---------- */
 
-.sketchbook-container { 
-    display: block;
-    grid-column: 15 / 23; grid-row: 2 / 10; 
-    aspect-ratio: 4 / 3; 
-    width: 100%; height: auto;
-    padding: 0;
-}
-.sketchbook-container > img { 
-    width: 100%; 
-    height: 100%;
-    object-fit: cover; 
-    object-position: 0 30px 0 0;
-    object-position:bottom; 
-    padding: 0;
-}
-.box-closeup {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: max-content;
-    align-content: baseline;
-    padding: 3em 0 0 0;
-}
-.closeup-container > img { 
-    display: block;
-    grid-column: 1 / 2; grid-row: 1 / 2;
-    width: 100%; height: 150vh;   
-    padding: 0;
-    object-position:bottom; object-fit: cover;
-}
-.closeup-text { 
-    display: block;
-    position: absolute;
-    font-size: 18px; letter-spacing: 0.9px; line-height: 1.1; text-align:justify; font-weight:lighter; 
-    background-color: rgb(16, 3, 9);  color: #f4f3ef;   
-   /* -webkit-mask-image: linear-gradient(to bottom, transparent, black 20px, black calc(100% - 20px), transparent),
-                      linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
-    mask-image: linear-gradient(to bottom, transparent, black 20px, black calc(100% - 20px), transparent),
-              linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
-               -webkit-mask-composite: source-in;
-  mask-composite: intersect; */
-    padding: 1.8em 5em;justify-self: baseline;  margin: 2em 0 0; border-radius: 0.1em;
-    ;  
-  
+@property --ink-rise{
+  syntax:"<percentage>";
+  inherits:false;
+  initial-value:-35%;
 }
 
+.question{
+  grid-column:1 / 25;
+  grid-row:2 / 9;
+  font-size:56px;
+  padding:0 .8rem 0;
+  text-align:right;
+  display:block;
+  line-height:1.1;
 
-/* Core alignment on your grid tracks */
-.deck-container {
-  position: relative;
-  grid-column: 15 / 23; 
-  grid-row: 2 / 10; 
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center; 
-  margin-bottom: 80px; /* Secure padding clearance for the next down-page section */
+  /* broad 35% colour feather gives the smooth bleed */
+  background:linear-gradient(
+    to top,
+    var(--burg) 0%,
+    var(--burg) var(--ink-rise),
+    #000000 calc(var(--ink-rise) + 35%),
+    #000000 100%
+  );
+  background-size:100% 100%;
+
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation-name:heading-bleed-up;
+  animation-fill-mode:both;
+  animation-timeline:scroll(root);
+  animation-timing-function:cubic-bezier(0.1,0.9,0.2,1);
 }
 
-/* Hide all structural radio triggers */
-.deck-radio {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
+@keyframes heading-bleed-up{
+  0%{ --ink-rise:-20%; }
+  24%, 100%{ --ink-rise:100%; }
 }
 
-.stack-wrapper {
-  position: relative;
-  width: clamp(320px, 90%, 900px);
-  height: clamp(280px, 90%, 800px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.layer {
-
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  opacity: 1 !important;
-  cursor: pointer;
-  will-change: transform;
-  backface-visibility: hidden;
-  transition:
-  transform 0.45s cubic-bezier(0.16,1,0.3,1),
-  z-index 0.45s step-start;
-}
-/* Clean click-through mechanics to avoid browser drag interference */
-.layer img {
-  pointer-events: none; 
-  user-select: none;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.bio-text{
+  grid-column:9 / 25;
+  grid-row:12 / 14;
+  font-size:17px;
+  padding:0 .8rem;
+  text-align:justify;
+  text-align-last:right;
 }
 
-/* ==========================================================================
-   THE 5-WAY MULTI-DIRECTIONAL SCATTER + ZERO-LAG ZOOM SYSTEM
-   The active checked image uses 'z-index 0s' to pop instantly over everything 
-   while zooming, removing the layer transition lag completely.
-   ========================================================================== */
+/* ---------- ESSAY ---------- */
+/* Row heights are 1fr and are sized by the paragraphs (the stack's height is
+   8 rows). Each paragraph keeps its original row span (2 / 2 / 3), so the row
+   size, and therefore the stack size, is unchanged. */
 
-/* --- STATE 1: Slide 1 Active --- */
-#slide-1:checked ~ .stack-wrapper .card-1 { transform: translate(0, 0) scale(1.2); z-index: 50; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s; }
-#slide-1:checked ~ .stack-wrapper .card-2 { transform: translate(60px, 40px); z-index: 4; }
-#slide-1:checked ~ .stack-wrapper .card-3 { transform: translate(120px, -20px); z-index: 3; }
-#slide-1:checked ~ .stack-wrapper .card-4 { transform: translate(-80px, 80px); z-index: 2; }
-#slide-1:checked ~ .stack-wrapper .card-5 { transform: translate(-140px, -40px); z-index: 1; }
+.boxabout-visit{
+  display:grid;
+  grid-template-columns:repeat(24,1fr);
+  grid-template-rows:repeat(10,1fr);
+  width:100%;
+  max-height:80vh;
+}
 
-/* --- STATE 2: Slide 2 Active --- */
-/* --- STATE 2: Slide 2 Active --- */
-#slide-2:checked ~ .stack-wrapper .card-2 { transform: translate(0, 0) scale(1.2); z-index: 50; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s; }
-#slide-2:checked ~ .stack-wrapper .card-3 { transform: translate(60px, 40px); z-index: 4; }
-#slide-2:checked ~ .stack-wrapper .card-4 { transform: translate(120px, -20px); z-index: 3; }
-#slide-2:checked ~ .stack-wrapper .card-5 { transform: translate(-30px, 80px); z-index: 2; } /* Pulled in from -80px to protect the left edge */
-#slide-2:checked ~ .stack-wrapper .card-1 { transform: translate(-60px, -60px); z-index: 1; } /* Safely reeled back from -180px so it stays behind/right of line 15 */
+.boxabout-visit > .reading-block{
+  display:block;
+  grid-column:2 / 14;
+  margin:0 -1rem 2rem 1rem; /* shifts the block 1rem toward the stack; width unchanged */
+  padding:0 .8rem;
+  font-size:16px;
+  line-height:1.2;
+  color:var(--slate);
+  text-align:justify;
+  text-align-last:left;
+  animation:reading-focus linear both;
+  animation-timeline:view();
+}
 
-/* --- STATE 3: Slide 3 Active --- */
-#slide-3:checked ~ .stack-wrapper .card-3 { transform: translate(0, 0) scale(1.2); z-index: 50; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s; }
-#slide-3:checked ~ .stack-wrapper .card-4 { transform: translate(60px, 40px); z-index: 4; }
-#slide-3:checked ~ .stack-wrapper .card-5 { transform: translate(12px, -20px); z-index: 3; }
-#slide-3:checked ~ .stack-wrapper .card-1 { transform: translate(-60px, -60px); z-index: 2; }   /* Reeled in from -180px */
-#slide-3:checked ~ .stack-wrapper .card-2 { transform: translate(-45px, 80px); z-index: 1; }    /* Reeled in from -140px */
+.boxabout-visit > .block-1{
+  grid-row:3 / 5;
+  animation-range:contain 15% contain 85%;
+}
 
-/* --- STATE 4: Slide 4 Active --- */
-#slide-4:checked ~ .stack-wrapper .card-4 { transform: translate(0, 0) scale(1.2); z-index: 50; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s; }
-#slide-4:checked ~ .stack-wrapper .card-5 { transform: translate(60px, 40px); z-index: 4; }
-#slide-4:checked ~ .stack-wrapper .card-1 { transform: translate(-60px, -60px); z-index: 3; }   /* Reeled in from -180px */
-#slide-4:checked ~ .stack-wrapper .card-2 { transform: translate(-45px, 80px); z-index: 2; }    /* Reeled in from -140px */
-#slide-4:checked ~ .stack-wrapper .card-3 { transform: translate(190px, -80px); z-index: 1; } 
+.boxabout-visit > .block-2{
+  grid-row:5 / 7;
+  animation-range:contain 25% contain 95%;
+}
 
+.boxabout-visit > .block-3{
+  grid-row:7 / 10;
+  animation-range:cover 45% exit 80%;
+}
 
-/* --- STATE 5: Slide 5 Active --- */
-#slide-5:checked ~ .stack-wrapper .card-5 {   transform: translate(0, 0) scale(1.2); z-index: 50; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), z-index 0s; }
-#slide-5:checked ~ .stack-wrapper .card-1 { transform: translate(-60px, -60px); z-index: 4; } /* Reeled in from -180px */
-#slide-5:checked ~ .stack-wrapper .card-2 { transform: translate(-45px, 60px); z-index: 3; }  /* Reeled in from -140px to stay right of line 15 */
-#slide-5:checked ~ .stack-wrapper .card-3 { transform: translate(140px, -80px); z-index: 2; } /* Tamed slightly to keep right side balanced */
-#slide-5:checked ~ .stack-wrapper .card-4 { transform: translate(120px, 100px); z-index: 1; } /* Tamed slightly to stay compact */
+/* ---------- CLOSEUP ---------- */
 
+.box-closeup{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr;
+  grid-template-rows:max-content;
+  align-content:baseline;
+  padding:3em 0 0 0;
+}
 
+.closeup-container > img{
+  display:block;
+  grid-column:1 / 2;
+  grid-row:1 / 2;
+  width:100%;
+  height:150vh;
+  padding:0;
+  object-position:bottom;
+  object-fit:cover;
+}
+
+.closeup-text{
+  display:block;
+  position:absolute;
+  font-size:18px;
+  letter-spacing:.9px;
+  line-height:1.1;
+  text-align:justify;
+  font-weight:lighter;
+  background-color:rgb(16,3,9);
+  color:var(--paper);
+  padding:1.8em 5em;
+  justify-self:baseline;
+  margin:2em 0 0;
+  border-radius:.1em;
+}
+
+/* ---------- IMAGE STACK (unchanged) ---------- */
+
+.deck-container{
+  position:relative;
+  grid-column:15 / 23;
+  grid-row:2 / 10;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:80px;
+}
+
+.deck-radio{
+  position:absolute;
+  opacity:0;
+  width:0;
+  height:0;
+  pointer-events:none;
+}
+
+.stack-wrapper{
+  position:relative;
+  width:clamp(320px,90%,900px);
+  height:clamp(280px,90%,800px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.layer{
+  position:absolute;
+  width:100%;
+  height:100%;
+  cursor:pointer;
+  will-change:transform;
+  backface-visibility:hidden;
+  transition:transform .45s cubic-bezier(.16,1,.3,1), z-index .45s step-start;
+}
+
+.layer img{
+  pointer-events:none;
+  user-select:none;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+/* Scatter + zoom. The active card pops to the front instantly (z-index 0s). */
+
+#slide-1:checked ~ .stack-wrapper .card-1,
+#slide-2:checked ~ .stack-wrapper .card-2,
+#slide-4:checked ~ .stack-wrapper .card-4,
+#slide-5:checked ~ .stack-wrapper .card-5{
+  transition:transform .45s cubic-bezier(.16,1,.3,1), z-index 0s;
+}
+
+#slide-1:checked ~ .stack-wrapper .card-1{ transform:translate(0,0) scale(1.2);       z-index:50; }
+#slide-1:checked ~ .stack-wrapper .card-2{ transform:translate(60px,40px);            z-index:4; }
+#slide-1:checked ~ .stack-wrapper .card-4{ transform:translate(-80px,80px);           z-index:2; }
+#slide-1:checked ~ .stack-wrapper .card-5{ transform:translate(-140px,-40px);         z-index:1; }
+
+#slide-2:checked ~ .stack-wrapper .card-2{ transform:translate(0,0) scale(1.2);       z-index:50; }
+#slide-2:checked ~ .stack-wrapper .card-4{ transform:translate(120px,-20px);          z-index:3; }
+#slide-2:checked ~ .stack-wrapper .card-5{ transform:translate(-30px,80px);           z-index:2; }
+#slide-2:checked ~ .stack-wrapper .card-1{ transform:translate(-60px,-60px);          z-index:1; }
+
+#slide-4:checked ~ .stack-wrapper .card-4{ transform:translate(0,0) scale(1.2);       z-index:50; }
+#slide-4:checked ~ .stack-wrapper .card-5{ transform:translate(60px,40px);            z-index:4; }
+#slide-4:checked ~ .stack-wrapper .card-1{ transform:translate(-60px,-60px);          z-index:3; }
+#slide-4:checked ~ .stack-wrapper .card-2{ transform:translate(-45px,80px);           z-index:2; }
+
+#slide-5:checked ~ .stack-wrapper .card-5{ transform:translate(0,0) scale(1.2);       z-index:50; }
+#slide-5:checked ~ .stack-wrapper .card-1{ transform:translate(-60px,-60px);          z-index:4; }
+#slide-5:checked ~ .stack-wrapper .card-2{ transform:translate(-45px,60px);           z-index:3; }
+#slide-5:checked ~ .stack-wrapper .card-4{ transform:translate(120px,100px);          z-index:1; }
 
 }
