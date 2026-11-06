@@ -158,7 +158,7 @@ body{
   grid-template-columns:repeat(12,minmax(0,1fr));
   grid-template-rows:auto auto minmax(0,1fr) auto;
   column-gap:10px;
-  align-items:start;
+  align-items:stretch;
   padding:clamp(32px,8vw,56px) var(--pad) 0;
 }
 
@@ -354,12 +354,15 @@ body{
 /* Stack: columns 7-12, level with paragraph 1.
    margin-bottom only needs to clear the cascade overhang. */
 .grid-container .deck-container{
-  grid-column:7 / 13;
-  margin-bottom:16px;
+  grid-column:6/ 13;
+  margin: 0  0 2em 1em;
+  grid-row:1 / 2;
+  position: relative; display: block; align-self: stretch;   
 }
-
+.grid-container .stack-wrapper {
+  width: 103%;  display: flow-root;height: 100%;
 }
-
+}
 /* =========================================================
    TABLET (768 – 1024px)
    ========================================================= */
@@ -701,33 +704,85 @@ body{
   object-fit:contain;
 }
 
-/* Scatter + zoom. The active card pops to the front instantly (z-index 0s). */
 
+/* ===== ACTIVE STATE (TOP OF STACK) ===== */
+/* ===== GLOBAL RESPONSIVENESS & CLICKABILITY ===== */
+.stack-wrapper .card-1,
+.stack-wrapper .card-2,
+.stack-wrapper .card-4,
+.stack-wrapper .card-5 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    pointer-events: auto; /* Guarantees the entire stack surfaces respond to clicks */
+    transition: transform 0.4s ease, z-index 0.4s ease;
+}
+
+/* ===== ACTIVE STATE (TOP OF STACK) ===== */
 #slide-1:checked ~ .stack-wrapper .card-1,
 #slide-2:checked ~ .stack-wrapper .card-2,
 #slide-4:checked ~ .stack-wrapper .card-4,
-#slide-5:checked ~ .stack-wrapper .card-5{
-  transition:transform .45s cubic-bezier(.16,1,.3,1), z-index 0s;
+#slide-5:checked ~ .stack-wrapper .card-5 {
+    transform: translate(0, 0) rotate(0deg);
+    z-index: 50;
 }
 
-#slide-1:checked ~ .stack-wrapper .card-1{ transform:translate(0,0) scale(1.2);       z-index:50; }
-#slide-1:checked ~ .stack-wrapper .card-2{ transform:translate(60px,40px);            z-index:4; }
-#slide-1:checked ~ .stack-wrapper .card-4{ transform:translate(-80px,80px);           z-index:2; }
-#slide-1:checked ~ .stack-wrapper .card-5{ transform:translate(-140px,-40px);         z-index:1; }
-
-#slide-2:checked ~ .stack-wrapper .card-2{ transform:translate(0,0) scale(1.2);       z-index:50; }
-#slide-2:checked ~ .stack-wrapper .card-4{ transform:translate(120px,-20px);          z-index:3; }
-#slide-2:checked ~ .stack-wrapper .card-5{ transform:translate(-30px,80px);           z-index:2; }
-#slide-2:checked ~ .stack-wrapper .card-1{ transform:translate(-60px,-60px);          z-index:1; }
-
-#slide-4:checked ~ .stack-wrapper .card-4{ transform:translate(0,0) scale(1.2);       z-index:50; }
-#slide-4:checked ~ .stack-wrapper .card-5{ transform:translate(60px,40px);            z-index:4; }
-#slide-4:checked ~ .stack-wrapper .card-1{ transform:translate(-60px,-60px);          z-index:3; }
-#slide-4:checked ~ .stack-wrapper .card-2{ transform:translate(-45px,80px);           z-index:2; }
-
-#slide-5:checked ~ .stack-wrapper .card-5{ transform:translate(0,0) scale(1.2);       z-index:50; }
-#slide-5:checked ~ .stack-wrapper .card-1{ transform:translate(-60px,-60px);          z-index:4; }
-#slide-5:checked ~ .stack-wrapper .card-2{ transform:translate(-45px,60px);           z-index:3; }
-#slide-5:checked ~ .stack-wrapper .card-4{ transform:translate(120px,100px);          z-index:1; }
-
+/* ===== SLIDE 1 ACTIVE ===== */
+#slide-1:checked ~ .stack-wrapper .card-5 {
+    transform: translate(5cqw, 1cqh) rotate(2deg);
+    z-index: 4;
 }
+#slide-1:checked ~ .stack-wrapper .card-4 {
+    transform: translate(-4.5cqw, 1.8cqh) rotate(-2deg);
+    z-index: 3;
+}
+}
+#slide-1:checked ~ .stack-wrapper .card-2 {
+    transform: translate(0, 0.5cqh) rotate(0.5deg); /* Tighter swing animation */
+    z-index: 1; /* Guaranteed bottommost */
+}
+
+/* ===== SLIDE 5 ACTIVE ===== */
+#slide-5:checked ~ .stack-wrapper .card-4 {
+    transform: translate(5cqw, 1cqh) rotate(2deg);
+    z-index: 4;
+}
+#slide-5:checked ~ .stack-wrapper .card-1 {
+    transform: translate(-4.5cqw, 1.8cqh) rotate(-2deg);
+    z-index: 3;
+}
+#slide-5:checked ~ .stack-wrapper .card-2 {
+    transform: translate(0, 0.5cqh) rotate(0.5deg); /* Tighter swing animation */
+    z-index: 1; /* Guaranteed bottommost */
+}
+
+/* ===== SLIDE 4 ACTIVE ===== */
+#slide-4:checked ~ .stack-wrapper .card-5 {
+    transform: translate(5cqw, 1cqh) rotate(2deg);
+    z-index: 4;
+}
+#slide-4:checked ~ .stack-wrapper .card-1 {
+    transform: translate(-4.5cqw, 1.8cqh) rotate(-2deg);
+    z-index: 3;
+}
+
+#slide-4:checked ~ .stack-wrapper .card-4{ transform:translate(0,0) scale(1);       z-index:50; }
+
+/* ===== SLIDE 2 ACTIVE ===== */
+#slide-2:checked ~ .stack-wrapper .card-1 {
+    transform: translate(5cqw, 1cqh) rotate(2deg);
+    z-index: 4;
+}
+
+#slide-2:checked ~ .stack-wrapper .card-5 {
+    transform: translate(-4.5cqw, 1.8cqh) rotate(-2deg);
+    z-index: 3;
+}
+
+#slide-2:checked ~ .stack-wrapper .card-4 {
+    transform: translate(2cqw, -1cqh) rotate(1deg);
+    z-index: 2;
+}
+
+
